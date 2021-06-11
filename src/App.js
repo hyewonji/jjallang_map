@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import KakaoMap from "./components/kakaoMap";
+import KakaoMap from "./components/KakaoMap";
 
 function App() {
     return (
