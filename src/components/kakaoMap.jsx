@@ -1,7 +1,7 @@
-/*global kakao*/
-
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
+
+const { kakao } = window;
 
 function KakaoMap() {
     const [coords, setCoords] = useState({
@@ -23,6 +23,7 @@ function KakaoMap() {
 
     /* Kakao 지도 API 활용 */
     useEffect(() => {
+        console.log(kakao);
         const container = document.getElementById("map");
         const options = {
             center: new kakao.maps.LatLng(coords.latitude, coords.longitude),
@@ -35,6 +36,7 @@ function KakaoMap() {
 
         searchAddrFromCoords(map.getCenter(), displayCenterInfo); //현재 지도 중심좌표 주소 표시
         ps.keywordSearch(`${location} 코인 노래방`, placesSearchCB); // 키워드로 장소 검색
+        map.panBy(100, 50);
 
         kakao.maps.event.addListener(map, "dragend", function () {
             const center = map.getCenter();
@@ -101,17 +103,13 @@ function KakaoMap() {
         }
     }, [coords, location]);
 
-    function handleClick() {
-        console.log("click");
-    }
-
     return (
         <>
             <div id="map" style={{ width: "100vw", height: "100vh" }} />
             <div
                 className="hAddr"
                 style={{
-                    backgroundColor: "red",
+                    backgroundColor: "white",
                     position: "absolute",
                     top: 0,
                     left: 0,
@@ -120,8 +118,8 @@ function KakaoMap() {
             >
                 <span className="title">지도중심기준 행정동 주소정보</span>
                 <span id="centerAddr"></span>
+                <Button>현 지도에서 재검색</Button>
             </div>
-            <Button onClick={handleClick} />
         </>
     );
 }
